@@ -20,6 +20,7 @@ include (
         'spark-sponge8',
         'spark-forge',
         'spark-fabric',
+        'spark-krypton',
         'spark-nukkit',
         'spark-waterdog',
         'spark-minestom'

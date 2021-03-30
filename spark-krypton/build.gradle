@@ -1,0 +1,53 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.31'
+    id 'com.github.johnrengelman.shadow' version '4.0.1'
+}
+
+repositories {
+    maven { url 'https://repo.bristermitten.me/repository/maven-public/' }
+    maven { url 'https://libraries.minecraft.net' }
+}
+
+dependencies {
+    implementation project(':spark-common')
+
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.guava:guava:19.0'
+
+    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib'
+    compileOnly 'org.kryptonmc:krypton-api:0.15.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+
+shadowJar {
+    archiveName = 'spark-krypton.jar'
+
+    relocate 'okio', 'me.lucko.spark.lib.okio'
+    relocate 'okhttp3', 'me.lucko.spark.lib.okhttp3'
+    relocate 'org.tukaani.xz', 'me.lucko.spark.lib.xz'
+    relocate 'com.google.protobuf', 'me.lucko.spark.lib.protobuf'
+    relocate 'org.objectweb.asm', 'me.lucko.spark.lib.asm'
+    relocate 'one.profiler', 'me.lucko.spark.lib.asyncprofiler'
+
+    exclude 'module-info.class'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/proguard/**'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand (
+                'pluginVersion': project.pluginVersion,
+                'pluginDescription': project.pluginDescription
+        )
+        include 'plugin.conf'
+    }
+}
+
+artifacts {
+    archives shadowJar
+    shadow shadowJar
+}
