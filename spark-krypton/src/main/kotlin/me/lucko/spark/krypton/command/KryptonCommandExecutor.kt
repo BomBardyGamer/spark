@@ -7,7 +7,7 @@ import org.kryptonmc.krypton.api.command.Sender
 
 class KryptonCommandExecutor(private val plugin: KryptonSparkPlugin) : Command("spark") {
 
-    override suspend fun execute(sender: Sender, args: List<String>) {
+    override fun execute(sender: Sender, args: List<String>) {
         plugin.threadDumper.ensureSetup()
         plugin.platform.executeCommand(KryptonCommandSender(sender), args.toTypedArray())
     }
