@@ -30,10 +30,7 @@ class KryptonCommandSender(sender: Sender) : AbstractCommandSender<Sender>(sende
 
     override fun getName() = delegate.name
 
-    override fun getUniqueId(): UUID? {
-        if (delegate is Player) return delegate.uuid
-        return null
-    }
+    override fun getUniqueId() = if (delegate is Player) delegate.uuid else null
 
     override fun sendMessage(message: Component) = delegate.sendMessage(message)
 

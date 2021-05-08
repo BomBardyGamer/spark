@@ -48,7 +48,7 @@ class KryptonSparkPlugin(context: PluginContext) : Plugin(context), SparkPlugin 
 
     override fun getPlatformInfo() = KryptonPlatformInfo(context.server)
 
-    override fun getPluginDirectory(): Path = context.folder.toPath()
+    override fun getPluginDirectory() = context.folder
 
     override fun getVersion() = context.description.version
 

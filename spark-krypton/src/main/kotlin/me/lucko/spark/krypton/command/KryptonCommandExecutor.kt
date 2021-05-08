@@ -12,6 +12,8 @@ class KryptonCommandExecutor(private val plugin: KryptonSparkPlugin) : Command("
         plugin.platform.executeCommand(KryptonCommandSender(sender), args.toTypedArray())
     }
 
-    override fun suggest(sender: Sender, args: List<String>): List<String> =
-        plugin.platform.tabCompleteCommand(KryptonCommandSender(sender), args.toTypedArray())
+    override fun suggest(
+        sender: Sender,
+        args: List<String>
+    ): List<String> = plugin.platform.tabCompleteCommand(KryptonCommandSender(sender), args.toTypedArray())
 }
