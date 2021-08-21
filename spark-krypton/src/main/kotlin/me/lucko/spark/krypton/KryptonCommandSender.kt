@@ -22,9 +22,8 @@ package me.lucko.spark.krypton
 
 import me.lucko.spark.common.command.sender.AbstractCommandSender
 import net.kyori.adventure.text.Component
-import org.kryptonmc.krypton.api.command.Sender
-import org.kryptonmc.krypton.api.entity.entities.Player
-import java.util.*
+import org.kryptonmc.api.command.Sender
+import org.kryptonmc.api.entity.player.Player
 
 class KryptonCommandSender(sender: Sender) : AbstractCommandSender<Sender>(sender) {
 

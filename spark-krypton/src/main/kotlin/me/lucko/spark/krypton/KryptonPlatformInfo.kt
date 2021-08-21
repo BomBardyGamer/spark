@@ -22,15 +22,15 @@ package me.lucko.spark.krypton
 
 import me.lucko.spark.common.platform.AbstractPlatformInfo
 import me.lucko.spark.common.platform.PlatformInfo
-import org.kryptonmc.krypton.api.Server
+import org.kryptonmc.api.Platform
 
-class KryptonPlatformInfo(private val server: Server) : AbstractPlatformInfo() {
+class KryptonPlatformInfo(private val platform: Platform) : AbstractPlatformInfo() {
 
     override fun getType() = PlatformInfo.Type.SERVER
 
-    override fun getName() = server.info.name
+    override fun getName() = platform.name
 
-    override fun getVersion() = server.info.version
+    override fun getVersion() = platform.version
 
-    override fun getMinecraftVersion() = server.info.minecraftVersion
+    override fun getMinecraftVersion() = platform.minecraftVersion
 }
