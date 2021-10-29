@@ -28,7 +28,7 @@ import org.kryptonmc.api.entity.player.Player
 
 class KryptonCommandSender(sender: Sender) : AbstractCommandSender<Sender>(sender) {
 
-    override fun getName() = delegate.name.toLegacySectionText()
+    override fun getName() = (delegate as? Player)?.profile?.name ?: delegate.name.toLegacySectionText()
 
     override fun getUniqueId() = (delegate as? Player)?.uuid
 
