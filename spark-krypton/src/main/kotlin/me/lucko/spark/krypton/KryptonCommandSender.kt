@@ -22,16 +22,19 @@ package me.lucko.spark.krypton
 
 import me.lucko.spark.common.command.sender.AbstractCommandSender
 import net.kyori.adventure.text.Component
+import org.kryptonmc.api.adventure.toLegacySectionText
 import org.kryptonmc.api.command.Sender
 import org.kryptonmc.api.entity.player.Player
 
 class KryptonCommandSender(sender: Sender) : AbstractCommandSender<Sender>(sender) {
 
-    override fun getName() = delegate.name
+    override fun getName() = delegate.name.toLegacySectionText()
 
-    override fun getUniqueId() = if (delegate is Player) delegate.uuid else null
+    override fun getUniqueId() = (delegate as? Player)?.uuid
 
-    override fun sendMessage(message: Component) = delegate.sendMessage(message)
+    override fun sendMessage(message: Component) {
+        delegate.sendMessage(message)
+    }
 
-    override fun hasPermission(permission: String?) = permission?.let { delegate.hasPermission(it) } ?: false
+    override fun hasPermission(permission: String) = delegate.hasPermission(permission)
 }
