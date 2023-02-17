@@ -1,0 +1,9 @@
+{
+  "id": "spark",
+  "name": "Spark",
+  "version": "@version@",
+  "description": "@desc@",
+  "authors": ["Luck"],
+  "main": "me.lucko.spark.krypton.KryptonSparkPlugin"
+}
+

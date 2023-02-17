@@ -20,7 +20,7 @@
 
 package me.lucko.spark.krypton
 
-import me.lucko.spark.common.util.ClassSourceLookup
+import me.lucko.spark.common.sampler.source.ClassSourceLookup
 import org.kryptonmc.api.plugin.PluginManager
 
 class KryptonClassSourceLookup(private val pluginManager: PluginManager) : ClassSourceLookup.ByClassLoader() {

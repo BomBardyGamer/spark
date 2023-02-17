@@ -18,19 +18,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.lucko.spark.krypton.ticking
+package me.lucko.spark.krypton
 
 import me.lucko.spark.common.tick.AbstractTickHook
-import me.lucko.spark.krypton.KryptonSparkPlugin
-import org.kryptonmc.api.event.Listener
+import org.kryptonmc.api.event.EventListener
+import org.kryptonmc.api.event.EventNode
+import org.kryptonmc.api.event.server.TickEvent
 import org.kryptonmc.api.event.server.TickStartEvent
 
-class KryptonTickHook(private val plugin: KryptonSparkPlugin) : AbstractTickHook() {
+class KryptonTickHook(private val eventNode: EventNode<TickEvent>) : AbstractTickHook() {
 
-    @Listener
-    fun onTickStart(event: TickStartEvent) = onTick()
+    private val listener = EventListener.of(TickStartEvent::class.java) { onTick() }
 
-    override fun start() = plugin.server.eventManager.register(plugin, this)
+    override fun start() {
+        eventNode.registerListener(listener)
+    }
 
-    override fun close() = plugin.server.eventManager.unregisterListener(plugin, this)
+    override fun close() {
+        eventNode.unregisterListener(listener)
+    }
 }

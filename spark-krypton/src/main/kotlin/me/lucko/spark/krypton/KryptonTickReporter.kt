@@ -18,19 +18,31 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.lucko.spark.krypton.ticking
+package me.lucko.spark.krypton
 
 import me.lucko.spark.common.tick.AbstractTickReporter
-import me.lucko.spark.krypton.KryptonSparkPlugin
-import org.kryptonmc.api.event.Listener
+import org.kryptonmc.api.event.EventListener
+import org.kryptonmc.api.event.EventNode
 import org.kryptonmc.api.event.server.TickEndEvent
+import org.kryptonmc.api.event.server.TickEvent
 
-class KryptonTickReporter(private val plugin: KryptonSparkPlugin) : AbstractTickReporter() {
+class KryptonTickReporter(private val eventNode: EventNode<TickEvent>) : AbstractTickReporter() {
 
-    @Listener
-    fun onTickEnd(event: TickEndEvent) = onTick(event.tickDuration.toDouble())
+    private val listener = EventListener.of(TickEndEvent::class.java) { event ->
+        val durationMillis = event.tickDuration / NANOS_PER_MILLI
+        onTick(durationMillis)
+    }
 
-    override fun start() = plugin.server.eventManager.register(plugin, this)
+    override fun start() {
+        eventNode.registerListener(listener)
+    }
 
-    override fun close() = plugin.server.eventManager.unregisterListener(plugin, this)
+    override fun close() {
+        eventNode.unregisterListener(listener)
+    }
+
+    companion object {
+
+        private const val NANOS_PER_MILLI = 1_000_000.0
+    }
 }
